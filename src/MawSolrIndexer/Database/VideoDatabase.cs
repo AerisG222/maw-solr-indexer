@@ -42,7 +42,7 @@ namespace MawSolrIndexer.Database {
                     + "       ARRAY ( "
                     + "           SELECT r.name "
                     + "             FROM maw.role r "
-                    + "            INNER JOIN photo.category_role cr "
+                    + "            INNER JOIN video.category_role cr "
                     + "                    ON r.id = cr.role_id "
                     + "                   AND cr.category_id = c.id "
                     + "       ) AS allowed_roles, "
