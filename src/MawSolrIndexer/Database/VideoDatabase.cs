@@ -36,20 +36,26 @@ namespace MawSolrIndexer.Database {
         async Task<IEnumerable<Category>> GetSourceCategoriesAsync()
         {
             var sql = "SELECT 'video' AS type, "
-                    + "       CONCAT('video_', CAST(id AS TEXT)) AS solr_id, "
-                    + "       id, "
-                    + "       year, "
-                    + "       is_private, "
-                    + "       name, "
-                    + "       teaser_image_width AS teaser_photo_width, "
-                    + "       teaser_image_height AS teaser_photo_height, "
-                    + "       teaser_image_path AS teaser_photo_path, "
-                    + "       teaser_image_sq_height AS teaser_photo_sq_height, "
-                    + "       teaser_image_sq_width AS teaser_photo_sq_width, "
-                    + "       teaser_image_sq_path AS teaser_photo_sq_path, "
-                    + "       gps_latitude, "
-                    + "       gps_longitude "
-                    + "  FROM video.category";
+                    + "       CONCAT('video_', CAST(c.id AS TEXT)) AS solr_id, "
+                    + "       c.id, "
+                    + "       c.year, "
+                    + "       ARRAY ( "
+                    + "           SELECT r.name "
+                    + "             FROM maw.role r "
+                    + "            INNER JOIN photo.category_role cr "
+                    + "                    ON r.id = cr.role_id "
+                    + "                   AND cr.category_id = c.id "
+                    + "       ) AS allowed_roles, "
+                    + "       c.name, "
+                    + "       c.teaser_image_width AS teaser_photo_width, "
+                    + "       c.teaser_image_height AS teaser_photo_height, "
+                    + "       c.teaser_image_path AS teaser_photo_path, "
+                    + "       c.teaser_image_sq_height AS teaser_photo_sq_height, "
+                    + "       c.teaser_image_sq_width AS teaser_photo_sq_width, "
+                    + "       c.teaser_image_sq_path AS teaser_photo_sq_path, "
+                    + "       c.gps_latitude, "
+                    + "       c.gps_longitude "
+                    + "  FROM video.category c";
 
             return await GetSourceCategoriesAsync(sql);
         }

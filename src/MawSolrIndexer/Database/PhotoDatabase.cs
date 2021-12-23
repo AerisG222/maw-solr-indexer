@@ -37,20 +37,26 @@ namespace MawSolrIndexer.Database {
         async Task<IEnumerable<Category>> GetSourceCategoriesAsync()
         {
             var sql = "SELECT 'photo' AS type, "
-                    + "       CONCAT('photo_', CAST(id AS TEXT)) AS solr_id, "
-                    + "       id, "
-                    + "       year, "
-                    + "       is_private, "
-                    + "       name, "
-                    + "       teaser_photo_width, "
-                    + "       teaser_photo_height, "
-                    + "       teaser_photo_path, "
-                    + "       teaser_photo_sq_height, "
-                    + "       teaser_photo_sq_width, "
-                    + "       teaser_photo_sq_path, "
-                    + "       gps_latitude, "
-                    + "       gps_longitude "
-                    + "  FROM photo.category";
+                    + "       CONCAT('photo_', CAST(c.id AS TEXT)) AS solr_id, "
+                    + "       c.id, "
+                    + "       c.year, "
+                    + "       ARRAY ( "
+                    + "           SELECT r.name "
+                    + "             FROM maw.role r "
+                    + "            INNER JOIN photo.category_role cr "
+                    + "                    ON r.id = cr.role_id "
+                    + "                   AND cr.category_id = c.id "
+                    + "       ) AS allowed_roles, "
+                    + "       c.name, "
+                    + "       c.teaser_photo_width, "
+                    + "       c.teaser_photo_height, "
+                    + "       c.teaser_photo_path, "
+                    + "       c.teaser_photo_sq_height, "
+                    + "       c.teaser_photo_sq_width, "
+                    + "       c.teaser_photo_sq_path, "
+                    + "       c.gps_latitude, "
+                    + "       c.gps_longitude "
+                    + "  FROM photo.category c";
 
             return await GetSourceCategoriesAsync(sql);
         }

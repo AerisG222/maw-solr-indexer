@@ -26,8 +26,8 @@ namespace MawSolrIndexer
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("is_private")]
-        public bool IsPrivate { get; set; }
+        [JsonPropertyName("allowed_roles")]
+        public string[] AllowedRoles { get; set; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }

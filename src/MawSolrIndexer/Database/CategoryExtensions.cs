@@ -9,7 +9,7 @@ namespace MawSolrIndexer.Database
                 SolrId = category.SolrId,
                 Id = category.Id,
                 Year = category.Year,
-                IsPrivate = category.IsPrivate,
+                AllowedRoles = category.AllowedRoles,
                 Name = category.Name,
                 TeaserPhotoHeight = category.TeaserPhotoHeight,
                 TeaserPhotoWidth = category.TeaserPhotoWidth,

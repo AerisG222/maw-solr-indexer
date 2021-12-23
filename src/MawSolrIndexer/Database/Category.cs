@@ -4,7 +4,7 @@ namespace MawSolrIndexer.Database {
         public string SolrId { get; set; }
         public int Id { get; set; }
         public int Year { get; set; }
-        public bool IsPrivate { get; set; }
+        public string[] AllowedRoles { get; set; }
         public string Name { get; set; }
         public int TeaserPhotoWidth { get; set; }
         public int TeaserPhotoHeight { get; set; }
