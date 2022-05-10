@@ -1,1 +1,1 @@
-buildah bud -f Containerfile -t maw-solr-indexer-dev
+buildah bud -f Containerfile -t maw-solr-indexer-test
