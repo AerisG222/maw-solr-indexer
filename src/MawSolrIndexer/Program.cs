@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MawSolrIndexer.Database;
+using MawSolrIndexer.Solr;
 
 namespace MawSolrIndexer
 {

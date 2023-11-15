@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace MawSolrIndexer
+namespace MawSolrIndexer.Solr
 {
     public class SolrUploader
     {
@@ -36,6 +36,9 @@ namespace MawSolrIndexer
         {
             var opts = new JsonSerializerOptions
             {
+                Converters = {
+                    new DateTimeJsonConverter()
+                },
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
 

@@ -19,19 +19,11 @@ namespace MawSolrIndexer
         }
 
         public async Task<IEnumerable<MultimediaCategory>> GetCategoriesAsync() {
-            var tasks = new List<Task<IEnumerable<MultimediaCategory>>>();
+            var results = new List<MultimediaCategory>();
 
             foreach(var source in _sources)
             {
-                tasks.Add(source.GetCategoriesAsync());
-            }
-
-            await Task.WhenAll(tasks);
-
-            var results = new List<MultimediaCategory>();
-
-            foreach(var task in tasks) {
-                results.AddRange(task.Result);
+                results.AddRange(await source.GetCategoriesAsync());
             }
 
             return results;
