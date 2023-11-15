@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MawSolrIndexer.Database {
-    public class VideoDatabase
-        : Database, ICategorySource
+namespace MawSolrIndexer.Database;
+
+public class VideoDatabase
+    : Database, ICategorySource
+{
+    public VideoDatabase(string connString)
+        : base(connString)
     {
-        public VideoDatabase(string connString)
-            : base(connString)
-        {
 
-        }
+    }
 
-        public async Task<IEnumerable<MultimediaCategory>> GetCategoriesAsync()
-        {
-            var sql =
+    public async Task<IEnumerable<MultimediaCategory>> GetCategoriesAsync()
+    {
+        var sql =
 @"
 SELECT cat.type,
        cat.solr_id,
@@ -98,7 +99,6 @@ GROUP BY cat.type,
          cat.gps_longitude;
 ";
 
-            return await GetSourceCategoriesAsync(sql);
-        }
+        return await GetSourceCategoriesAsync(sql);
     }
 }

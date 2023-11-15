@@ -2,31 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MawSolrIndexer
+namespace MawSolrIndexer;
+
+public class Repository
 {
-    public class Repository
+    ICategorySource[] _sources;
+
+    public Repository(params ICategorySource[] sources)
     {
-        ICategorySource[] _sources;
-
-        public Repository(params ICategorySource[] sources)
+        if(sources == null || sources.Length == 0)
         {
-            if(sources == null || sources.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(sources));
-            }
-
-            _sources = sources;
+            throw new ArgumentNullException(nameof(sources));
         }
 
-        public async Task<IEnumerable<MultimediaCategory>> GetCategoriesAsync() {
-            var results = new List<MultimediaCategory>();
+        _sources = sources;
+    }
 
-            foreach(var source in _sources)
-            {
-                results.AddRange(await source.GetCategoriesAsync());
-            }
+    public async Task<IEnumerable<MultimediaCategory>> GetCategoriesAsync() {
+        var results = new List<MultimediaCategory>();
 
-            return results;
+        foreach(var source in _sources)
+        {
+            results.AddRange(await source.GetCategoriesAsync());
         }
+
+        return results;
     }
 }

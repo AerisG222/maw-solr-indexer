@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MawSolrIndexer
+namespace MawSolrIndexer;
+
+public interface ICategorySource
 {
-    public interface ICategorySource
-    {
-        Task<IEnumerable<MultimediaCategory>> GetCategoriesAsync();
-    }
+    Task<IEnumerable<MultimediaCategory>> GetCategoriesAsync();
 }
